@@ -1,6 +1,6 @@
 {% set version = "5.1.0" %}
 
-{% set build = 20 %}
+{% set build = 21 %}
 {% if license_family == "gpl" %}
   # gpl gets a higher build number since we want to favor the build where librttopo is included
   {% set build = build + 100 %}
@@ -68,6 +68,15 @@ requirements:
   {% if license_family == "gpl" %}
     - librttopo
   {% endif %}
+
+test:
+  files:
+    - test-spatialite.c
+    - test-spatialite.bat
+  requires:
+    - {{ compiler('c') }}  # [win]
+  commands:
+    - call test-spatialite.bat {{ license_family }}  # [win]
 
 about:
   home: https://www.gaia-gis.it/fossil/libspatialite/index
